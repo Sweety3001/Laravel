@@ -132,4 +132,9 @@ Route::get("setcookie",function(){
     return response("cookie set successfully")
     ->cookie("Author","Sweety",60);
 });
+
+use Illuminate\Http\Request;
+Route::get("getcookie",function(Request $request){
+    return $request->cookie("Author");
+});
 ?>
