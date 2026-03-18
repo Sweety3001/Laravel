@@ -137,4 +137,9 @@ use Illuminate\Http\Request;
 Route::get("getcookie",function(Request $request){
     return $request->cookie("Author");
 });
+
+Route::get("deletecookie",function(){
+    return response("cookie deleted successfully")
+    ->cookie("Author",null,-1);
+});
 ?>
