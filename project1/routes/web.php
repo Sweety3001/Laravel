@@ -5,141 +5,246 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get("/about",function(){
-    return "This is About";
+// for displaying file we in veiw and have to create file with.blade.php extension in resources/views folder
+Route::get('/about', function () {
+    return view('about');
 });
-
-Route::get("/contact",function(){
-    return "<h1 style='color: blue;'>This is Contact</h1>";
+Route::get('/contact', function(){
+    return "sorry i am bussy";
 });
-
-Route::get("/data1",function(){
-    $name="Sweety";
+Route::get('/dash',function(){
+    return "<h1 style='color:red'> hellow guys dekho n dekho nnn guysssss </h1>";
+});
+Route::get('/name',function(){
+    $name="sweety";
     return $name;
 });
-
-Route::get("/data2",function(){
-    $firstname="Sweety";
-    $lastname="Pradhan";
-    return $firstname." ".$lastname;
-    // return "$firstname $lastname";
+// route para
+Route::get('/name/{name}',function($name){
+    
+    return $name;
 });
-
-//Required parameter
-Route::get("/data3/{name}",function($name){
-    return "My name is ".$name;
+// default para
+Route::get("/na/{name?}",function($name="bharti"){
+    return $name;
 });
-
-//Default parameter
-Route::get("/data4/{name?}",function($name="Sweety"){
-    return "My name is ".$name;
-});
-
-//Optional parameter
-Route::get("/data5/{name?}",function($name=null){
-    return "My name is ".$name;
-});
-
-
-//example
+// 
 Route::get("/evenodd/{num}",function($num){
-    if($num%2==0){
-        return "Even Number";
-    }
-    else{
-        return "Odd Number";
-    }
+    if($num%2==0) return "even";
+    else return "odd";
 });
-Route::get("/age/{age}",function($age){
-    if($age>=18){
-        return "You are an adult.";
-    }
-    else{
-        return "You are not an adult.";
-    }
-});
-Route::get("/grade/{grade}",function($grade){
-    if($grade>=90){
-        return "You have a A grade.";
-    }
-    else if($grade>=80){
-        return "You have a B grade.";
-    }
-    else if($grade>=70){
-        return "You have a C grade.";
-    }
-    else if($grade>=60){
-        return "You have a D grade.";
-    }
-    else{
-        return "You have a F grade.";
-    }
-});
-
-Route::get('/home', function () {
-    return view('home');
-});
-
-Route::get('/data', function () {
-    return view('data', ['name' => 'Sweety', 'age' => 20]);
-});
+// create grade system
 
 Route::get("/withdata",function(){
-    return view('data')->with('name','Sweety')->with('age',20);
-});
-
-Route::get("/compact",function(){
-    $name="Sweety";
-    $age=20;
-    return view('data',compact('name','age'));
-});
-
-Route::get("product",function(){
-    return "Hello this is product page";
-});
-Route::get("list",function(){
-    return redirect('product');
+    return view("data")->with("name","sawli");
 });
 
 
-//redirect with parameter
+// redirecting route
+// Route::get("product",function(){
+//     return "hello this is product of website";
+// });
+// Route::get("list",function(){
+//     return redirect('product');
+// });
+
+// redirect with parameter
 Route::get("product/{name}",function($name){
-    return "Hello this is product page Mr. $name";
+    return "hello this is product of website and product name is $name";
 });
-Route::get("list/{name}",function($name){
-    return redirect("product/$name");
+Route::get("list/{item}",function($item){
+    return redirect("product/{$item}");
 });
-
-
-Route::get("product2/{name?}",function($name=null){
-    return "Hello this is product page Mr. $name";
+// redirect with parameter with potional para
+Route::get("product/{name?}",function($name=null){
+    return "hello this is product of website and product name is $name";
 });
-Route::get("list2/{name?}",function($name=null){
-    return redirect("product2/$name");
+Route::get("list/{item?}",function($item=null){
+    return redirect("product/{$item}");
 });
-
 
 Route::get("header",function(){
-    return response("Hello this is header")
-    ->header('Content-Type','text/plain')
-    ->header("Author","Sweety");
+    return response("hello added")
+    ->header("content-type","text/plain")
+    ->header("author","the greatest sawli");
 });
 
-
-//cookies
 Route::get("setcookie",function(){
-    return response("cookie set successfully")
-    ->cookie("Author","Sweety",60);
+    return response("cookies set Succesfully")
+    ->cookie("username","Sawli ",120);
 });
 
+// set get delete cookie
 use Illuminate\Http\Request;
 Route::get("getcookie",function(Request $request){
-    return $request->cookie("Author");
+    return $request->cookie("username");
 });
 
 Route::get("deletecookie",function(){
     return response("cookie deleted successfully")
-    ->cookie("Author",null,-1);
+    ->cookie("username",null,-1);
+    
 });
-?>
+
+// share data with all view file
+Route::get("products",function(){
+    $productName="mango";
+    return view("products",compact("productName"));
+});
+Route::get("productlists",function(){
+    return view("productlist");
+});
+Route::get("dashboard",function(){
+    return view("dashboard");
+});
+
+
+Route::get("lpu/admin/teacher/index",function(){
+    return view("teacher");
+})->name("lata");
+Route::get("lpu/admin/student/index",function(){
+    return view("student");
+})->name("lassi");
+Route::get("lpu/admin/vendor/index",function(){
+    return view("vendor");
+})->name("lavi");
+
+Route::get("studentinfo",function(){
+    $students=[
+        ["name"=>"sawli","age"=>21,"city"=>"phagwara"],
+        ["name"=>"sweety","age"=>21,"city"=>"phagwara"],
+        ["name"=>"sawli","age"=>21,"city"=>"phagwara"],
+        ["name"=>"sawli","age"=>21,"city"=>"phagwara"],
+        ["name"=>"sawli","age"=>21,"city"=>"phagwara"],
+    ];
+    
+    return view("studentInfo",compact('students'));
+});
+Route::get("studentinfo/{name}",function($name){
+    $students=[
+        ["name"=>"sawli","age"=>21,"city"=>"phagwara"],
+        ["name"=>"sweety","age"=>21,"city"=>"phagwara"],
+        ["name"=>"sawli","age"=>21,"city"=>"phagwara"],
+        ["name"=>"sweety","age"=>21,"city"=>"phagwara"],
+        ["name"=>"sawli","age"=>21,"city"=>"phagwara"],
+    ];
+    
+    return view("studentInfo",compact('students','name'));
+});
+
+
+// json data
+Route::get("jsondata",function(){
+    return response()->json([
+        "name"=>"sawli",
+        "age"=>21,
+        "city"=>"phagwara"
+    ]);
+});
+
+use App\Http\Controllers\userController;
+// use App\Http\Controllers\productController;
+use App\Http\Controllers\employeeController;
+Route::get("getproduct",[productController::class,"productList"]);
+Route::get("getemployeedata",[employeeController::class,"employeeData"]);
+
+// use App\Http\Controllers\studentController;
+Route::get("studenthomepage",[studentController::class,"index"]);
+
+//
+// include
+Route::get("home",function(){
+    return view("home");
+});
+
+// getting curent url
+Route::get("/about",function(){
+
+});
+
+// use App\Http\Controllers\productController;
+Route::get("index",[productController::class,"index"]);
+Route::get("sweety",[productController::class,"about"]);
+
+
+use App\Http\Controllers\studentController;
+Route::resource("resourcecontroller",studentController::class);
+
+Route::get("admin/index",function(){
+    return "thiis is admin index page";
+});
+Route::get("admin/about",function(){
+    return "thiis is admin about page";
+});
+Route::get("admin/contact",function(){
+    return "thiis is admin contact page";
+});
+
+
+Route::prefix("admin")->group(function(){
+    Route::get("index",function(){
+        return "thiis is admin index page";
+    });
+    Route::get("about",function(){
+        return "thiis is admin about page";
+    });
+    Route::get("contact",function(){
+        return "thiis is admin contact page";
+    });
+});
+
+
+//group
+Route::group([],function(){
+    Route::get("index",function(){
+        return "thiis is admin index page";
+    });
+    Route::get("about",function(){
+        return "thiis is admin about page";
+    });
+    Route::get("contact",function(){
+        return "thiis is admin contact page";
+    });
+});
+
+//Controller prefix
+use App\Http\Controllers\productController;
+Route::prefix("admin")->group(function(){
+    Route::get("index",[productController::class,"index"]);
+    Route::get("about",[productController::class,"about"]);
+    Route::get("contact",[productController::class,"contact"]);
+});
+
+Route::get('user1/{id}', function ($id) {
+    return  $id;
+})->where('id', '[0-9]+');
+Route::get('user2/{id}', function ($id) {
+    return  $id;
+})->where('id', '[a-zA-Z]+');
+Route::get('user3/{id}', function ($id) {
+    return  $id;
+})->where('id', '[0-9a-zA-Z]+');
+
+
+
+// passing data using with() method
+// in the bookstore application, you need to display the details of a specific book on a page.The book's details(title, author, price and description)
+//instuction:
+//instructions
+//create a route in web.php that handles displaying a book by its ID
+//create the blade view to display the book details, including its title, author, price and description
+
+//expected output
+//title:
+//author:
+//price:
+//description:
+
+
+
+Route::get("/withfnc",function(){
+    return view("dataBook")->with("Title","Laravel Handbook")
+    ->with("Author","Sweety Pradhan")
+    ->with("Price","100 Rs")
+    ->with("Description","A novel set in the 1920s");
+});

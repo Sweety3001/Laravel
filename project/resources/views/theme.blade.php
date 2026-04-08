@@ -1,0 +1,1 @@
+<h1>Theme: {{ $color }}</h1>

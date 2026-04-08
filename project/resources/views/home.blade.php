@@ -10,6 +10,10 @@
       <li>Python</li>
       <li>JavaScript</li>
     </ul>
+    <a href="/">Welcome</a>
+    <a href="/home">Home</a>
+    <a href="/about/John">About</a>
+
     <footer>
       <p>&copy; 2026 My Website. All rights reserved.</p>
     </footer>
